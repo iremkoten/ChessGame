@@ -1,0 +1,6 @@
+Merhabalar. 
+Satranç bildiğim bir oyun değil. İnternetten araştırdığım kadarıyla programı yazdım. 
+Yazdığım programın istediğiniz gereksinimleri karşılamadığının farkındayım. Ancak boş göndermek istemediğim için elimden geldiği kadarıyla yapmaya çalıştım. 
+
+Game.java dosyası main method'un yer aldığı dosya. 
+Board.java ise hamlelerin yer aldığı dosya.
