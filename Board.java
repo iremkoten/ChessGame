@@ -2,16 +2,17 @@ import java.util.ArrayList;
 public class Board {
 	private Piece[][] board = new Piece[8][8];
 	
-	public Board() 	{
+	public Board() {
 		for(int i = 0; i < board.length; i++)
 			for(int j = 0; j < board.length; j++)
 				board[i][j] = null;
 	}
 	
-	public Piece[][] getBoard()	{
+	public Piece[][] getBoard() {
 		return board;
 	}
 	
+	//Adds pieces to the board
 	public boolean putPiece(Piece p, String pos) {
 		p.setPosition(pos);
 		int y = p.getPositionCharNum();
@@ -20,12 +21,14 @@ public class Board {
 		return true;
 	}
 	
+	// Returns board	
 	public Piece getPiece(String pos) {
 		int y = pos.charAt(0) - 'a';
 		int x = 8 - Integer.parseInt(pos.substring(1,2));
 		return board[x][y];
 	}
 	
+	//Controls between pos1 and pos2 is empty
 	public boolean betweenIsEmpty(String pos1, String pos2) {
 		int x = 8 - Integer.parseInt(pos1.substring(1,2));
 		int y = pos1.charAt(0) - 'a';
@@ -49,6 +52,7 @@ public class Board {
 		return true;		
 	}
 	
+	//Returns checking piece
 	public Piece getPieceWhoIsChecking(String color) {
 		ArrayList<Piece> pieces;
 		if(color.equals("white"))
@@ -82,7 +86,7 @@ public class Board {
 	}
 	
 	// Returns pieces that have same color with given color as paramater
-	private ArrayList<Piece> getAllPieces(String color)	{
+	private ArrayList<Piece> getAllPieces(String color) {
 		ArrayList<Piece> pieces = new ArrayList<Piece>();
 		for(int i = 0; i < 8; i++)
 			for(int j = 0; j < 8; j++)
@@ -115,6 +119,7 @@ public class Board {
 		return false;
 	}
 	
+	//Returns whether checkmate
 	public boolean checkMate(String color) {
 		Piece king = getKing(color);
 		
@@ -145,15 +150,15 @@ public class Board {
 		return false;
 	}
 	
+	//Return positions that between pos1 and pos2
 	private ArrayList<String> getBetweenPositionsForCheckPositions(String pos1, String pos2) {
 		ArrayList<String> positions = new ArrayList<String>();
-		if(getPiece(pos1) instanceof Knight || getPiece(pos2) instanceof Knight || getPiece(pos1) instanceof Pawn || getPiece(pos2) instanceof Pawn)
+		if(getPiece(pos1) instanceof Knight || getPiece(pos2) instanceof Knight || getPiece(pos1) instanceof Pawn || getPiece(pos2) instanceof Pawn) {
 			if(getPiece(pos1) instanceof Knight || getPiece(pos1) instanceof Pawn)
 				positions.add(pos1);
 			else
 				positions.add(pos2);
-		else
-		{
+		} else {
 			int x = 8 - Integer.parseInt(pos1.substring(1,2));
 			int y = pos1.charAt(0) - 'a';
 			int posSign = (int)Math.signum((8 - Integer.parseInt(pos2.substring(1,2))) - (8 - Integer.parseInt(pos1.substring(1,2))));
@@ -171,10 +176,13 @@ public class Board {
 		return positions;
 	}
 	
+	//Returns whether the position send as a parameter is empty
 	public boolean isEmpty(String pos) {
 		return getPiece(pos) == null;
 	}
 	
+	
+	//Returns whether the piece can move
 	private boolean movePiece(Piece p, String newPosition) {
 		String position = p.getPosition();
 		if((p.canMove(newPosition) && betweenIsEmpty(position, newPosition)) && (getPiece(newPosition) == null || (getPiece(newPosition) != null && !getPiece(newPosition).getColor().equals(p.getColor())))) {
@@ -202,6 +210,8 @@ public class Board {
 		return false;
 	}
 	
+	
+	// Remove pieces on the board	
 	private boolean removePiece(String pos) {
 		if(isEmpty(pos))
 			return false;
@@ -211,6 +221,7 @@ public class Board {
 		return true;
 	}
 	
+	//returns the position of the opposing team's king
 	private Piece getKing(String color)	{
 		Piece king = null;
 		for(int i = 0; i < 8; i++)
